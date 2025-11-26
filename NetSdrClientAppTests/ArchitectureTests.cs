@@ -15,7 +15,7 @@ namespace NetSdrClientAppTests
                 .And()
                 .AreClasses()
                 .Should()
-                .HaveNameEndingWith("Service") 
+                .HaveNameEndingWith("Wrapper")
                 .GetResult();
 
             Assert.IsTrue(result.IsSuccessful, "Architecture violation: Networking classes must end with 'Service'");
