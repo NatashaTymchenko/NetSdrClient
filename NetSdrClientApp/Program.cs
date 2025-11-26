@@ -1,46 +1,57 @@
-﻿using NetSdrClientApp;
+using System;
+using System.Threading.Tasks;
+using NetSdrClientApp;
 using NetSdrClientApp.Networking;
 
-Console.WriteLine(@"Usage:
-C - connect
-D - disconnet
-F - set frequency
-S - Start/Stop IQ listener
-Q - quit");
-
-var tcpClient = new TcpClientWrapper("127.0.0.1", 5000);
-var udpClient = new UdpClientWrapper(60000);
-
-var netSdr = new NetSdrClient(tcpClient, udpClient);
-
-while (true)
+namespace NetSdrClientApp
 {
-    var key = Console.ReadKey(intercept: true).Key;
-    if (key == ConsoleKey.C)
+    public static class Program
     {
-        await netSdr.ConnectAsync();
-    }
-    else if (key == ConsoleKey.D)
-    {
-        netSdr.Disconnect();
-    }
-    else if (key == ConsoleKey.F)
-    {
-        await netSdr.ChangeFrequencyAsync(20000000, 1);
-    }
-    else if (key == ConsoleKey.S)
-    {
-        if (netSdr.IQStarted)
+        public static async Task Main()
         {
-            await netSdr.StopIQAsync();
-        }
-        else
+            Console.WriteLine(@"Usage:
+            C - connect
+            D - disconnet
+            F - set frequency
+            S - Start/Stop IQ listener
+            Q - quit");
+
+        var tcpClient = new TcpClientWrapper("127.0.0.1", 5000);
+        var udpClient = new UdpClientWrapper(60000);
+
+        var netSdr = new NetSdrClient(tcpClient, udpClient);
+
+        while (true)
         {
-            await netSdr.StartIQAsync();
+            var key = Console.ReadKey(intercept: true).Key;
+            if (key == ConsoleKey.C)
+            {
+                await netSdr.ConnectAsync();
+            }
+            else if (key == ConsoleKey.D)
+            {
+                netSdr.Disconnect();
+            }
+            else if (key == ConsoleKey.F)
+            {
+                await netSdr.ChangeFrequencyAsync(20000000, 1);
+            }
+            else if (key == ConsoleKey.S)
+            {
+                if (netSdr.IQStarted)
+                {
+                    await netSdr.StopIQAsync();
+                }
+                else
+                {
+                    await netSdr.StartIQAsync();
+                }
+            }
+            else if (key == ConsoleKey.Q)
+            {
+                break;
+             }
+            }
         }
-    }
-    else if (key == ConsoleKey.Q)
-    {
-        break;
     }
 }
