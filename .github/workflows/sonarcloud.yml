@@ -28,8 +28,8 @@ jobs:
         run: |
           dotnet tool install --global dotnet-sonarscanner
           dotnet sonarscanner begin `
-            /d:sonar.projectKey="NatashaTymchenko_NetSdrClient" `
-            /d:sonar.organization="natashatymchenko" `
+            /k:"NatashaTymchenko_NetSdrClient" `
+            /o:"natashatymchenko" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
             /d:sonar.cs.opencover.reportsPaths="**/coverage.xml" `
             /d:sonar.cpd.cs.minimumTokens=40 `
