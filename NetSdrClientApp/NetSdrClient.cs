@@ -17,7 +17,6 @@ namespace NetSdrClientApp
             _udpClient = udpClient;
         }
 
-        // Оновлений виклик асинхронного методу
         public async Task ConnectAsync() => await _tcpClient.ConnectAsync();
 
         public void Disconnect()
@@ -29,9 +28,7 @@ namespace NetSdrClientApp
         public async Task StartIQAsync()
         {
             if (IQStarted) return;
-
-            await SendCommandAsync(0x0080, 0x00); 
-            
+            await SendCommandAsync(0x0080, 0x00);
             await _udpClient.StartListeningAsync();
             IQStarted = true;
         }
@@ -39,9 +36,7 @@ namespace NetSdrClientApp
         public async Task StopIQAsync()
         {
             if (!IQStarted) return;
-
             await SendCommandAsync(0x0000, 0x00);
-
             _udpClient.StopListening();
             IQStarted = false;
         }
@@ -56,7 +51,6 @@ namespace NetSdrClientApp
         {
             ushort dataLen = (ushort)(data?.Length ?? 0);
             ushort length = (ushort)(2 + 2 + 1 + dataLen);
-            
             byte[] packet = new byte[length];
 
             packet[0] = (byte)(length & 0xFF);
@@ -67,11 +61,9 @@ namespace NetSdrClientApp
 
             if (data != null && dataLen > 0)
             {
-                int bytesToCopy = Math.Min(data.Length, length - 5);
-                Array.Copy(data, 0, packet, 5, bytesToCopy);
+                Array.Copy(data, 0, packet, 5, Math.Min(data.Length, length - 5));
             }
 
-            // Оновлений виклик WriteAsync
             await _tcpClient.WriteAsync(packet);
         }
     }
