@@ -12,8 +12,6 @@ namespace NetSdrClientApp.Networking
 {
     public class TcpClientWrapper : ITcpClient
     {
-        private string _host;
-        private int _port;
         private TcpClient? _tcpClient;
         private NetworkStream? _stream;
         private CancellationTokenSource _cts;
@@ -24,8 +22,6 @@ namespace NetSdrClientApp.Networking
 
         public TcpClientWrapper(string host, int port)
         {
-            _host = host;
-            _port = port;
         }
 
         public void Connect()
