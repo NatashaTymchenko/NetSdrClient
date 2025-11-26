@@ -14,19 +14,21 @@ namespace NetSdrClientApp.Networking
         public TcpClientWrapper(string host, int port)
         {
             _tcpClient = new TcpClient(host, port);
-            _stream = _tcpClient.GetStream(); 
+    
         }
 
-        public async Task ConnectAsync() 
+        public async Task ConnectAsync()
         {
-            if (Connected) return; 
-            await Task.CompletedTask; 
+            if (Connected) return;
+            await Task.CompletedTask;
         }
 
         public void Disconnect() => _tcpClient.Close();
 
         public async Task WriteAsync(byte[] data)
-        {
+        {         
+            if (_stream == null && Connected) _stream = _tcpClient.GetStream();
+            
             if (_stream != null)
             {
                 await _stream.WriteAsync(data, 0, data.Length);
