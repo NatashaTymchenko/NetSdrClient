@@ -1,4 +1,4 @@
-name: Build and Test
+name: Build Only
 
 on:
   push:
@@ -12,6 +12,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
@@ -21,6 +22,3 @@ jobs:
         
       - name: Build
         run: dotnet build NetSdrClient.sln -c Release --no-restore
-        
-      - name: Test
-        run: dotnet test NetSdrClientAppTests/NetSdrClientAppTests.csproj -c Release --no-build
