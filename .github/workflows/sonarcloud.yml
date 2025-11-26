@@ -1,4 +1,4 @@
-nname: Lab 7 Success
+name: Lab 7 Final
 
 on:
   push:
@@ -8,19 +8,14 @@ on:
 
 jobs:
   build:
-    name: Security Update Check
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-      
-      # Відновлюємо тільки основний проект
-      - name: Restore
-        run: dotnet restore NetSdrClientApp/NetSdrClientApp.csproj
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
         
-      # Збираємо тільки основний проект (ігноруємо помилки в тестах)
-      - name: Build App Only
-        run: dotnet build NetSdrClientApp/NetSdrClientApp.csproj -c Release --no-restore
+    - name: Build Client Only
+      run: dotnet build NetSdrClientApp/NetSdrClientApp.csproj
