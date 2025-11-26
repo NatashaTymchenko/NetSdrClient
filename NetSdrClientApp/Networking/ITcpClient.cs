@@ -1,5 +1,5 @@
-﻿uusing System.Threading.Tasks;
 using System;
+using System.Threading.Tasks;
 
 namespace NetSdrClientApp.Networking
 {
