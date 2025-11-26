@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System.Threading.Tasks;
 
 namespace NetSdrClientApp.Networking
 {
-    public interface ITcpClient
+    public interface ITcpClient: System.IDisposable
     {
-        void Connect();
-        void Disconnect();
-        Task SendMessageAsync(byte[] data);
-
-        event EventHandler<byte[]> MessageReceived;
-        public bool Connected { get; }
+       bool Connected { get; }
+       Task ConnectAsync();
+        void Disconnect();        
+        Task WriteAsync(byte[] data);        
     }
 }
